@@ -1,0 +1,28 @@
+---
+- set_fact:
+    container_list: "{{ containers | map(attribute='container_name')}}"
+  when: use_templates
+
+- name: Get templ containers status
+  docker_container_info:
+    name: "{{ item }}"
+  with_items: "{{ container_list }}"
+  when: use_templates
+  register: container_templ_status
+
+- name: Get containers status
+  docker_container_info:
+    name: "{{ item }}"
+  with_items: "{{ container_names }}"
+  when: use_templates == false
+  register: container_status
+
+- name: Assert container present
+  with_items: "{{ use_templates | ternary(container_templ_status.results, container_status.results) | map(attribute='container') | default(false) }}"
+  assert:
+    that: 
+      - item
+    quiet: true
+    fail_msg: "You try to {{ compose_state }} container but it wasn't found"
+    success_msg: "Containers found"
+  when: use_templates == false

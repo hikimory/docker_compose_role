@@ -1,0 +1,15 @@
+---
+- include_tasks: install_docker.yml
+  when: install_packages
+
+- include_tasks: run_containers.yml
+  when: compose_state == 'run'
+
+- include_tasks: restart_containers.yml
+  when: compose_state == 'restart'
+
+- include_tasks: rebuild_containers.yml
+  when: compose_state == 'rebuild'
+
+- include_tasks: stop_containers.yml
+  when: compose_state == 'stop'

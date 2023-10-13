@@ -1,0 +1,89 @@
+# Installation
+install_packages: true
+# true
+# false
+
+# Define a custom list of packages to install
+prep_packages:
+  - apt-transport-https
+  - ca-certificates
+  - curl
+  - gnupg-agent
+  - software-properties-common
+  - python3-pip
+
+pip_packages:
+  - docker
+  - docker-compose
+
+docker_packages:
+  - docker-ce
+  - docker-ce-cli
+  - containerd.io
+
+# Docker group
+docker_group: docker
+docker_user: root 
+
+# Project files destination
+docker_remote_app_dir: /tmp/myapp
+docker_local_app_dir: docker_app/
+
+# Templates
+use_templates: true
+# true
+# false
+
+#Templates
+container_names: []
+# - container_name_1
+# - container_name_2
+
+# Containers state.
+compose_state: restart
+# run - run and build containers
+# stop - stop all containers
+# restart - restart containers
+# rebuild - restart containers
+
+# Environment variables - .env file.
+environment_variables: []
+# - MYSQL_DATABASE=docker_demo
+# - MYSQL_USER=user
+# - MYSQL_PASSWORD=user_pass
+# - MYSQL_ROOT_PASSWORD=root_pass
+# - PMA_HOST=mysql
+# - PMA_PORT=3306
+
+# Containers.
+containers: []
+# - service_name: test
+#   image: test_image:5.7.37
+#   container_name: test
+#   restart: unless-stopped
+#   ports:
+#     - "3306:3306"
+#   volumes:
+#     - .local/path:/remote/path/
+#     - volume_name:/remote/path/
+#   labels:
+#     - "com.example.description=Database volume"
+#     - "com.example.department=IT/Ops"
+#     - "com.example.label-with-empty-value"
+#   environment:
+#     - "key=value"
+#     - "key=value"
+#   networks:
+#     - network_name
+#   depends_on:
+#     - service_name
+
+# Volumes.
+volumes: []
+  # - name: dbdata
+  #   driver: dbdata
+
+# Networks.
+networks: []
+  # - name: app-network
+  #   driver: bridge
